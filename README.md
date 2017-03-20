@@ -2,7 +2,7 @@
 
 Telegram bot to check that the site is alive.
 
-You can found bot here: (https://t.me/website_monitor_bot)[https://t.me/website_monitor_bot]
+You can found bot here: [https://t.me/website_monitor_bot](https://t.me/website_monitor_bot)
 
 ## Install
 
