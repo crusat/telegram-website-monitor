@@ -15,4 +15,7 @@ You can found bot here: [https://t.me/website_monitor_bot](https://t.me/website_
 
     $ source venv/bin/activate
     $ python3 main.py
-    
+
+## Cron
+
+Add to cron job with file `cron.py`
