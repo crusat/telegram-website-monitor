@@ -87,7 +87,7 @@ updater.dispatcher.add_handler(CommandHandler("add", add, pass_args=True))
 updater.dispatcher.add_handler(CommandHandler("del", delete, pass_args=True))
 updater.dispatcher.add_handler(CommandHandler("list", url_list))
 updater.dispatcher.add_handler(CommandHandler("test", test, pass_args=True))
-updater.dispatcher.add_handler(CommandHandler("help", show_help, pass_args=True))
+updater.dispatcher.add_handler(CommandHandler("help", show_help))
 
 print('Telegram bot started')
 
