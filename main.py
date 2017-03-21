@@ -18,6 +18,7 @@ For example: https://crusat.ru
 For any issues: https://github.com/crusat/telegram-website-monitor/issues
 """
 
+bad_url_text = "Bad url. Please use next format: http://example.com"
 
 def start(bot, update):
     bot.sendMessage(chat_id=update.message.chat_id, text="Hello!\nThis is telegram bot to check that the site is alive.\n%s" % help_text)
@@ -29,8 +30,8 @@ def show_help(bot, update):
 
 def add(bot, update, args):
     url = args[0]
-    if not validators.url(url, public=True):
-        bot.sendMessage(chat_id=update.message.chat_id, text="Bad url")
+    if not url or not validators.url(url, public=True):
+        bot.sendMessage(chat_id=update.message.chat_id, text=bad_url_text)
         return False
     website_count = (Website.select().where((Website.chat_id == update.message.chat_id) & (Website.url == url)).count())
     if website_count == 0:
@@ -43,8 +44,8 @@ def add(bot, update, args):
 
 def delete(bot, update, args):
     url = args[0]
-    if not validators.url(url, public=True):
-        bot.sendMessage(chat_id=update.message.chat_id, text="Bad url")
+    if not url or not validators.url(url, public=True):
+        bot.sendMessage(chat_id=update.message.chat_id, text=bad_url_text)
         return False
     website = Website.get((Website.chat_id == update.message.chat_id) & (Website.url == url))
     if website:
@@ -67,8 +68,8 @@ def url_list(bot, update):
 
 def test(bot, update, args):
     url = args[0]
-    if not validators.url(url, public=True):
-        bot.sendMessage(chat_id=update.message.chat_id, text="Bad url")
+    if not url or not validators.url(url, public=True):
+        bot.sendMessage(chat_id=update.message.chat_id, text=bad_url_text)
         return False
     try:
         r = requests.head(url)
@@ -78,7 +79,6 @@ def test(bot, update, args):
             bot.sendMessage(chat_id=update.message.chat_id, text="Status code of url %s is %s" % (url, r.status_code))
     except:
         bot.sendMessage(chat_id=update.message.chat_id, text="Error for url %s" % url)
-
 
 
 updater = Updater(TELEGRAM_API_KEY)
