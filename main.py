@@ -52,11 +52,15 @@ def test(bot, update, args):
     if not validators.url(url, public=True):
         bot.sendMessage(chat_id=update.message.chat_id, text="Bad url")
         return False
-    r = requests.head(url)
-    if r.status_code == 200:
-        bot.sendMessage(chat_id=update.message.chat_id, text="Url %s is alive (status code 200)" % url)
-    else:
-        bot.sendMessage(chat_id=update.message.chat_id, text="Status code of url %s is %s" % (url, r.status_code))
+    try:
+        r = requests.head(url)
+        if r.status_code == 200:
+            bot.sendMessage(chat_id=update.message.chat_id, text="Url %s is alive (status code 200)" % url)
+        else:
+            bot.sendMessage(chat_id=update.message.chat_id, text="Status code of url %s is %s" % (url, r.status_code))
+    except:
+        bot.sendMessage(chat_id=update.message.chat_id, text="Error for url %s" % url)
+
 
 
 updater = Updater(TELEGRAM_API_KEY)
