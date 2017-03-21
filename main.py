@@ -6,11 +6,11 @@ import validators
 
 
 help_text = """
-/help - This help.
-/list - Show yours added urls.
-/add <url> - Add new url for monitoring.
-/del <url> - Remove exist url.
-/test <url> - Test current status code for url right now.
+/help - Help
+/list - Show yours added urls
+/add <url> - Add new url for monitoring
+/del <url> - Remove exist url
+/test <url> - Test current status code for url right now
 
 Url format is http[s]://host.zone/path?querystring
 For example: https://crusat.ru
