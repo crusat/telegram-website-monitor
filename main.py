@@ -5,8 +5,26 @@ import requests
 import validators
 
 
+help_text = """
+/help - This help.
+/list - Show yours added urls.
+/add <url> - Add new url for monitoring.
+/del <url> - Remove exist url.
+/test <url> - Test current status code for url right now.
+
+Url format is http[s]://host.zone/path?querystring
+For example: https://crusat.ru
+
+For any issues: https://github.com/crusat/telegram-website-monitor/issues
+"""
+
+
 def start(bot, update):
-    bot.sendMessage(chat_id=update.message.chat_id, text="Hello!\nThis is telegram bot to check that the site is alive.")
+    bot.sendMessage(chat_id=update.message.chat_id, text="Hello!\nThis is telegram bot to check that the site is alive.\n%s" % help_text)
+
+
+def show_help(bot, update):
+    bot.sendMessage(chat_id=update.message.chat_id, text="%s" % help_text)
 
 
 def add(bot, update, args):
@@ -69,6 +87,7 @@ updater.dispatcher.add_handler(CommandHandler("add", add, pass_args=True))
 updater.dispatcher.add_handler(CommandHandler("del", delete, pass_args=True))
 updater.dispatcher.add_handler(CommandHandler("list", url_list))
 updater.dispatcher.add_handler(CommandHandler("test", test, pass_args=True))
+updater.dispatcher.add_handler(CommandHandler("help", show_help, pass_args=True))
 
 print('Telegram bot started')
 
