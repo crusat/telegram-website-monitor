@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import telegram
 from settings import TELEGRAM_API_KEY
 from data import Website

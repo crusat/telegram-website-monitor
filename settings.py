@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 TELEGRAM_API_KEY = ''
 
 

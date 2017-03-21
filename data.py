@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from peewee import *
 from playhouse.sqlite_ext import SqliteExtDatabase
 import datetime

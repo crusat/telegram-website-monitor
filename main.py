@@ -1,8 +1,9 @@
+#!/usr/bin/env python
 from telegram.ext import Updater, CommandHandler
 from settings import TELEGRAM_API_KEY
 from data import Website
 import requests
-import validators
+from decorators import required_argument, valid_url
 
 
 help_text = """
@@ -18,7 +19,6 @@ For example: https://crusat.ru
 For any issues: https://github.com/crusat/telegram-website-monitor/issues
 """
 
-bad_url_text = "Bad url. Please use next format: http://example.com"
 
 def start(bot, update):
     bot.sendMessage(chat_id=update.message.chat_id, text="Hello!\nThis is telegram bot to check that the site is alive.\n%s" % help_text)
@@ -28,11 +28,10 @@ def show_help(bot, update):
     bot.sendMessage(chat_id=update.message.chat_id, text="%s" % help_text)
 
 
+@required_argument
+@valid_url
 def add(bot, update, args):
     url = args[0]
-    if not url or not validators.url(url, public=True):
-        bot.sendMessage(chat_id=update.message.chat_id, text=bad_url_text)
-        return False
     website_count = (Website.select().where((Website.chat_id == update.message.chat_id) & (Website.url == url)).count())
     if website_count == 0:
         website = Website(chat_id=update.message.chat_id, url=url)
@@ -42,11 +41,9 @@ def add(bot, update, args):
         bot.sendMessage(chat_id=update.message.chat_id, text="Website %s already exists" % url)
 
 
+@required_argument
 def delete(bot, update, args):
     url = args[0]
-    if not url or not validators.url(url, public=True):
-        bot.sendMessage(chat_id=update.message.chat_id, text=bad_url_text)
-        return False
     website = Website.get((Website.chat_id == update.message.chat_id) & (Website.url == url))
     if website:
         website.delete_instance()
@@ -66,11 +63,10 @@ def url_list(bot, update):
         bot.sendMessage(chat_id=update.message.chat_id, text="%s" % out)
 
 
+@required_argument
+@valid_url
 def test(bot, update, args):
     url = args[0]
-    if not url or not validators.url(url, public=True):
-        bot.sendMessage(chat_id=update.message.chat_id, text=bad_url_text)
-        return False
     try:
         r = requests.head(url)
         if r.status_code == 200:
