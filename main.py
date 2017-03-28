@@ -8,6 +8,10 @@ import botan
 
 
 help_text = """
+The bot ensures that your website was always online. In the case of status changes, the bot will tell you that you need to pay attention to the site. The website is checked for availability every 5 minutes.
+
+Commands:
+
 /help - Help
 /list - Show yours added urls
 /add <url> - Add new url for monitoring
@@ -15,9 +19,11 @@ help_text = """
 /test <url> - Test current status code for url right now
 
 Url format is http[s]://host.zone/path?querystring
-For example: https://crusat.ru
+For example:
 
-For any issues: https://github.com/crusat/telegram-website-monitor/issues
+/test https://crusat.ru
+
+For any issues visit: https://github.com/crusat/telegram-website-monitor/issues
 
 Contact author: @crusat
 """
