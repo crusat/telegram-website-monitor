@@ -18,6 +18,8 @@ Url format is http[s]://host.zone/path?querystring
 For example: https://crusat.ru
 
 For any issues: https://github.com/crusat/telegram-website-monitor/issues
+
+Contact author: @crusat
 """
 
 def start(bot, update):
