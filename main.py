@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 from telegram.ext import Updater, CommandHandler
-from settings import TELEGRAM_API_KEY
+from settings import TELEGRAM_API_KEY, BOTAN_TOKEN
 from data import Website
 import requests
 from decorators import required_argument, valid_url
+import botan
 
 
 help_text = """
@@ -19,18 +20,20 @@ For example: https://crusat.ru
 For any issues: https://github.com/crusat/telegram-website-monitor/issues
 """
 
-
 def start(bot, update):
+    botan.track(BOTAN_TOKEN, update.message.chat_id, update.message.to_dict(), 'start')
     bot.sendMessage(chat_id=update.message.chat_id, text="Hello!\nThis is telegram bot to check that the site is alive.\n%s" % help_text)
 
 
 def show_help(bot, update):
+    botan.track(BOTAN_TOKEN, update.message.chat_id, update.message.to_dict(), 'help')
     bot.sendMessage(chat_id=update.message.chat_id, text="%s" % help_text)
 
 
 @required_argument
 @valid_url
 def add(bot, update, args):
+    botan.track(BOTAN_TOKEN, update.message.chat_id, update.message.to_dict(), 'add')
     url = args[0]
     website_count = (Website.select().where((Website.chat_id == update.message.chat_id) & (Website.url == url)).count())
     if website_count == 0:
@@ -43,6 +46,7 @@ def add(bot, update, args):
 
 @required_argument
 def delete(bot, update, args):
+    botan.track(BOTAN_TOKEN, update.message.chat_id, update.message.to_dict(), 'delete')
     url = args[0]
     website = Website.get((Website.chat_id == update.message.chat_id) & (Website.url == url))
     if website:
@@ -53,6 +57,7 @@ def delete(bot, update, args):
 
 
 def url_list(bot, update):
+    botan.track(BOTAN_TOKEN, update.message.chat_id, update.message.to_dict(), 'list')
     websites = (Website.select().where(Website.chat_id == update.message.chat_id))
     out = ''
     for website in websites:
@@ -66,6 +71,7 @@ def url_list(bot, update):
 @required_argument
 @valid_url
 def test(bot, update, args):
+    botan.track(BOTAN_TOKEN, update.message.chat_id, update.message.to_dict(), 'test')
     url = args[0]
     try:
         r = requests.head(url)

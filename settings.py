@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 TELEGRAM_API_KEY = ''
+BOTAN_TOKEN = ''
 
 
 try:
