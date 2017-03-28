@@ -42,7 +42,7 @@ def show_help(bot, update):
 @valid_url
 def add(bot, update, args):
     botan.track(BOTAN_TOKEN, update.message.chat_id, update.message.to_dict(), 'add')
-    url = args[0]
+    url = args[0].lower()
     website_count = (Website.select().where((Website.chat_id == update.message.chat_id) & (Website.url == url)).count())
     if website_count == 0:
         website = Website(chat_id=update.message.chat_id, url=url)
@@ -55,7 +55,7 @@ def add(bot, update, args):
 @required_argument
 def delete(bot, update, args):
     botan.track(BOTAN_TOKEN, update.message.chat_id, update.message.to_dict(), 'delete')
-    url = args[0]
+    url = args[0].lower()
     website = Website.get((Website.chat_id == update.message.chat_id) & (Website.url == url))
     if website:
         website.delete_instance()
@@ -80,7 +80,7 @@ def url_list(bot, update):
 @valid_url
 def test(bot, update, args):
     botan.track(BOTAN_TOKEN, update.message.chat_id, update.message.to_dict(), 'test')
-    url = args[0]
+    url = args[0].lower()
     try:
         r = requests.head(url)
         if r.status_code == 200:
