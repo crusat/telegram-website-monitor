@@ -44,7 +44,7 @@ def show_help(bot, update):
 def add(bot, update, args):
     try:
         botan.track(BOTAN_TOKEN, update.message.chat_id, update.message.to_dict(), 'add')
-        url = args[0].lower()
+        url = args[0]
         website_count = (Website.select().where((Website.chat_id == update.message.chat_id) & (Website.url == url)).count())
         if website_count == 0:
             website = Website(chat_id=update.message.chat_id, url=url)
