@@ -42,15 +42,20 @@ def show_help(bot, update):
 @required_argument
 @valid_url
 def add(bot, update, args):
-    # botan.track(BOTAN_TOKEN, update.message.chat_id, update.message.to_dict(), 'add')
+    print('add')
+    botan.track(BOTAN_TOKEN, update.message.chat_id, update.message.to_dict(), 'add')
+    print(args[0])
     url = args[0].lower()
+    print(url)
     website_count = (Website.select().where((Website.chat_id == update.message.chat_id) & (Website.url == url)).count())
+    print(website_count)
     if website_count == 0:
         website = Website(chat_id=update.message.chat_id, url=url)
         website.save()
         bot.sendMessage(chat_id=update.message.chat_id, text="Added %s" % url)
     else:
         bot.sendMessage(chat_id=update.message.chat_id, text="Website %s already exists" % url)
+    print('end')
 
 
 @required_argument
