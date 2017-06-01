@@ -51,8 +51,11 @@ def add(bot, update, args):
     print(website_count)
     if website_count == 0:
         website = Website(chat_id=update.message.chat_id, url=url)
+        print('ok1')
         website.save()
+        print('ok2')
         bot.sendMessage(chat_id=update.message.chat_id, text="Added %s" % url)
+        print('ok3')
     else:
         bot.sendMessage(chat_id=update.message.chat_id, text="Website %s already exists" % url)
     print('end')
