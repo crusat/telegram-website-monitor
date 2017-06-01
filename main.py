@@ -52,7 +52,7 @@ def add(bot, update, args):
     if website_count == 0:
         website = Website(chat_id=update.message.chat_id, url=url)
         print('ok1')
-        website.save()
+        website.save(force_insert=True)
         print('ok2')
         bot.sendMessage(chat_id=update.message.chat_id, text="Added %s" % url)
         print('ok3')
