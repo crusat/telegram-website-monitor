@@ -28,6 +28,7 @@ For any issues visit: https://github.com/crusat/telegram-website-monitor/issues
 Contact author: @crusat
 """
 
+
 def start(bot, update):
     botan.track(BOTAN_TOKEN, update.message.chat_id, update.message.to_dict(), 'start')
     bot.sendMessage(chat_id=update.message.chat_id, text="Hello!\nThis is telegram bot to check that the site is alive.\n%s" % help_text)
